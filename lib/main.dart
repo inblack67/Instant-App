@@ -1,10 +1,5 @@
-import 'package:ferry/ferry.dart';
-import 'package:ferry_flutter/ferry_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:instant/ferry/client.dart';
-import 'package:instant/graphql/greet.data.gql.dart';
-import 'package:instant/graphql/greet.req.gql.dart';
-import 'package:instant/graphql/greet.var.gql.dart';
+import 'package:instant/custom_widgets/home.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,39 +10,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData.dark(),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  final client = initClient();
-  final greetReq = GGreetReq();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Instant'),
+      title: 'Instant',
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.dark,
+        primaryColor: Colors.grey[850],
+        accentColor: Colors.grey,
+        fontFamily: 'Georgia',
+        textTheme: TextTheme(
+          headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
         ),
-        body: Operation(
-          client: client,
-          operationRequest: greetReq,
-          builder: (context,
-              OperationResponse<GGreetData, GGreetVars>? response, error) {
-            if (response == null) {
-              return Text('Failed to fetch');
-            }
-            if (response.loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final data = response.data?.hello ?? 'No Data';
-            return Text(data);
-          },
-        ));
+      ),
+      home: Home(),
+      initialRoute: Home.id,
+      routes: {
+        Home.id: (context) => Home(),
+      },
+    );
   }
 }
