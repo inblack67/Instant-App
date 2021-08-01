@@ -1,0 +1,37 @@
+schema {
+  query: RootQueryType
+  mutation: RootMutationType
+  subscription: RootSubscriptionType
+}
+
+input LoginUserInputType {
+  password: String!
+  username: String!
+}
+
+type RootMutationType {
+  """Login User"""
+  loginUser(input: LoginUserInputType!): Boolean
+}
+
+type RootQueryType {
+  """hello"""
+  hello: String
+
+  """Get all Users"""
+  users: [UserType]
+}
+
+type RootSubscriptionType {
+  loginSubscription: String
+}
+
+type UserType {
+  email: String
+  id: ID
+  insertedAt: String
+  name: String
+  password: String
+  username: String
+}
+
